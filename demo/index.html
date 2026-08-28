@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Picture Pop</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#eeeafc;font-family:Inter,Segoe UI,sans-serif;color:#27243a;display:grid;place-items:center;min-height:100vh}.phone{width:390px;height:780px;background:#f6f4ff;border-radius:34px;box-shadow:0 30px 70px #463d7460;padding:28px 24px;display:flex;flex-direction:column;overflow:hidden}.top{display:flex;justify-content:space-between;align-items:center}h1{font-size:29px;margin:0;font-weight:850}.sub{color:#706d7c;margin:3px 0}.score{background:#fff;border-radius:18px;padding:10px 13px;font-weight:800}.star{color:#ffb300}.progress{height:9px;background:#e4defa;border-radius:9px;margin-top:22px;overflow:hidden}.fill{height:100%;width:16.67%;background:#7357ff}.count{text-align:right;font-weight:700;font-size:13px;margin:7px 2px 15px}.card{height:350px;border-radius:28px;background:#ffe4e6;display:grid;place-items:center;font-size:145px;box-shadow:0 13px 30px #7357ff18}.answer{height:58px;border:0;border-radius:17px;background:#fff;margin-top:22px;text-align:center;font-size:18px;outline:3px solid transparent}.answer:focus{outline-color:#b7a9ff}.message{height:39px;text-align:center;padding-top:11px;font-weight:800;color:#16834c}.check{height:57px;border:0;border-radius:17px;background:#7357ff;color:#fff;font-size:17px;font-weight:800;cursor:pointer}.check:active{transform:scale(.99)}
+  </style>
+</head>
+<body>
+  <main class="phone" aria-label="Picture Pop app preview">
+    <div class="top"><div><h1>Picture Pop</h1><p class="sub">What do you see?</p></div><div class="score"><span class="star">★</span> <span id="score">0</span> / 6</div></div>
+    <div class="progress"><div class="fill" id="fill"></div></div><div class="count" id="count">1 of 6</div>
+    <div class="card" id="card">🍎</div>
+    <input class="answer" id="answer" aria-label="Type the name here" placeholder="✎  Type the name here" autocomplete="off">
+    <div class="message" id="message"></div>
+    <button class="check" id="check">Check answer</button>
+  </main>
+  <script>
+    const items=[['🍎','apple','#ffe4e6'],['🚗','car','#dceeff'],['🎂','cake','#ffe5f4'],['👟','shoe','#e6f7ec'],['🍌','banana','#fff4c7'],['⚽','ball','#e9e7f7']];let i=0,score=0,correct=false;
+    const answer=document.querySelector('#answer'),message=document.querySelector('#message'),button=document.querySelector('#check');
+    button.onclick=()=>{if(correct){i=(i+1)%items.length;correct=false;answer.disabled=false;answer.value='';message.textContent='';document.querySelector('#card').textContent=items[i][0];document.querySelector('#card').style.background=items[i][2];document.querySelector('#count').textContent=`${i+1} of 6`;document.querySelector('#fill').style.width=`${(i+1)/6*100}%`;button.textContent='Check answer';answer.focus();return}if(answer.value.trim().toLowerCase()===items[i][1]){correct=true;score++;document.querySelector('#score').textContent=score;message.textContent='Great job! 🎉';answer.disabled=true;button.textContent='Next picture  →'}else{message.style.color='#d04949';message.textContent=answer.value.trim()?'Try again! You can do it.':'Type your answer first!'}};
+    answer.addEventListener('keydown',e=>{if(e.key==='Enter')button.click()});
+  </script>
+</body>
+</html>
